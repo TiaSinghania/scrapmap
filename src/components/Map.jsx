@@ -1,14 +1,27 @@
 import React, { useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import "./Map.css";
 
-function AddPinOnClick({ onAddPin }) {
+function AddPinOnClick({ onMapClick }) {
   useMapEvents({
     click(e) {
-      onAddPin({ id: crypto.randomUUID(), lat: e.latlng.lat, lng: e.latlng.lng });
+      onMapClick({ lat: e.latlng.lat, lng: e.latlng.lng });
     },
   });
-  return null; // renders nothing — it's a listener, not UI
+  return null;
+}
+
+function PinForm({ onSave, onCancel }) {
+  const [label, setLabel] = useState("");
+
+  return (
+    <div className="pin-form">
+      <input value={label} onChange={(e) => setLabel(e.target.value)} />
+      <button onClick={onCancel}>×</button>
+      <button onClick={() => onSave(label)}>Save</button>
+    </div>
+  );
 }
 
 const Map = () => {
@@ -16,16 +29,24 @@ const Map = () => {
   const latitude = 0;
   const longitude = 0;
   const [pins, setPins] = useState([]);
+  const [pendingPin, setPendingPin] = useState(null);
 
-  
-  return ( 
-    // Make sure you set the height and width of the map container otherwise the map won't show
+  const handleCancel = () => setPendingPin(null);
+
+  const handleSave = (label) => {
+    setPins((prev) => [...prev, { id: crypto.randomUUID(), ...pendingPin, label }]);
+    setPendingPin(null);
+  };
+
+  return (
+    <>
+      {/* Make sure you set the height and width of the map container otherwise the map won't show */}
       <MapContainer center={[latitude, longitude]} zoom={2} minZoom={0} maxZoom={19} ref={mapRef} style={{height: "100vh", width: "100vw"}}>
         {/* Detail layer: zoom 17+ */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-            minZoom={17}
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          minZoom={17}
         />
         {/* Watercolor + labels: zoom 0–16 */}
         <TileLayer
@@ -42,10 +63,11 @@ const Map = () => {
           <Marker key={pin.id} position={[pin.lat, pin.lng]} />
         ))}
 
-        <AddPinOnClick onAddPin={(pin) => setPins((prev) => [...prev, pin])} />
-        
+        <AddPinOnClick onMapClick={(latlng) => setPendingPin(latlng)} />
       </MapContainer>
-      
+
+      {pendingPin && <PinForm onSave={handleSave} onCancel={handleCancel} />}
+    </>
   );
 };
 
