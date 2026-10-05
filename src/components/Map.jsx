@@ -1,6 +1,7 @@
 import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
-import { db, storage } from "../app/firebase";
+import { db, storage, auth } from "../app/firebase";
+import { signOut } from "firebase/auth";
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import Sidebar from "./Sidebar";
@@ -8,11 +9,8 @@ import PreviewForm from "./PreviewForm";
 import Preview from "./Preview";
 import "leaflet/dist/leaflet.css";
 import "../style/Map.css"; 
-
+import "../style/AuthGate.css";
 import L from "leaflet";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 
 const pinIcon = L.divIcon({
@@ -49,21 +47,26 @@ function Pin({ id, lat, lon, onClick }) {
   );
 }
 
-export default function Map() {
+export default function Map( {user} ) {
   const [pins, setPins] = useState([]);
   
   const [activePinId, setActivePinId] = useState(null); 
   const [isEditing, setIsEditing] = useState(false);    
   const [pendingLocation, setPendingLocation] = useState(null); 
+  const [accessDenied, setAccessDenied] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, 'pins'), (snapshot) => {
-      const fetchedPins = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setPins(fetchedPins);
-    });
+    const unsubscribe = onSnapshot(
+      collection(db, 'pins'),
+      (snapshot) => {
+        setAccessDenied(false);
+        setPins(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      },
+      (err) => {
+        console.error("Pins listener error:", err);
+        setAccessDenied(err.code === 'permission-denied');
+      }
+    );
     return () => unsubscribe();
   }, []);
 
@@ -106,6 +109,15 @@ export default function Map() {
     ? pins.find(p => p.id === activePinId) 
     : pendingLocation; 
 
+    if (accessDenied) {
+      return (
+        <div className="auth-screen">
+          <h1>No access</h1>
+          <p>{user.email} isn&apos;t on the list for this map.</p>
+          <button onClick={() => signOut(auth)} className="auth-button">Sign out</button>
+        </div>
+    );
+  }
   return (
     <div className="map-wrapper">
       <MapContainer 
