@@ -15,3 +15,8 @@
   width: 100%;
   z-index: 0;
 }
+
+.leaflet-tooltip {
+  max-width: 14rem;
+  white-space: normal;
+}

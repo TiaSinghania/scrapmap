@@ -3,7 +3,7 @@ import { ref, deleteObject } from "firebase/storage";
 import { db, storage, auth } from "../app/firebase";
 import { signOut } from "firebase/auth";
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Tooltip, useMapEvents } from "react-leaflet";
 import Sidebar from "./Sidebar";
 import PreviewForm from "./PreviewForm";
 import Preview from "./Preview";
@@ -25,6 +25,7 @@ const pinIcon = L.divIcon({
   iconSize: [28, 40],
   iconAnchor: [14, 39], // needle tip sits on the exact location
   popupAnchor: [0, -40],
+  tooltipAnchor: [0, -40],
 });
 
 
@@ -36,14 +37,18 @@ function ClickCatcher({ onMapClick }) {
   return null;
 }
 
-// 2. CUSTOM PIN COMPONENT
-function Pin({ id, lat, lon, onClick }) {
+
+function Pin({ id, lat, lon, title, onClick }) {
   return (
-    <Marker 
-      position={[lat, lon]} 
+    <Marker
+      position={[lat, lon]}
       icon={pinIcon}
-      eventHandlers={{ click: () => onClick(id) }} 
-    />
+      eventHandlers={{ click: () => onClick(id) }}
+    >
+      {title && (
+        <Tooltip direction="top">{title}</Tooltip>
+      )}
+    </Marker>
   );
 }
 
@@ -145,7 +150,7 @@ export default function Map( {user} ) {
         <ClickCatcher onMapClick={handleMapClick} />
 
         {pins.map((pin) => (
-          <Pin key={pin.id} id={pin.id} lat={pin.lat} lon={pin.lon} onClick={handlePinClick} />
+          <Pin key={pin.id} id={pin.id} lat={pin.lat} lon={pin.lon} title={pin.title} onClick={handlePinClick} />
         ))}
 
         {pendingLocation && !activePinId && (
