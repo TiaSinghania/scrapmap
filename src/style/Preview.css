@@ -63,3 +63,13 @@
 .btn-edit:hover {
   background-color: #eff6ff;
 }
+
+.preview-actions { display: flex; gap: 0.5rem; }
+
+.btn-delete {
+  background: transparent;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  cursor: pointer;
+}
+.btn-delete:hover:not(:disabled) { background: #dc2626; color: #fff; }
