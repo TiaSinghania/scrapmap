@@ -1,0 +1,54 @@
+/* Shared "paper cut" buttons.
+   The button itself is plain; its ::before is the paper shape behind the label.
+   The torn-edge SVG filter only touches that background layer, so text stays sharp. */
+.btn-save,
+.btn-cancel,
+.auth-button {
+  position: relative;
+  isolation: isolate;
+  padding: 0.65rem 1.2rem;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: var(--ink);
+  font: 700 1rem/1.2 var(--font-heading);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.btn-save::before,
+.btn-cancel::before,
+.auth-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--card);
+  border: var(--line) solid var(--border-color);
+  filter: url(#torn-edge-small);
+  transition: background-color 0.15s;
+}
+
+.btn-save { color: var(--paper); }
+.btn-save::before { background: var(--accent); }
+.btn-save:hover:not(:disabled)::before { background: var(--accent-dark); }
+
+.btn-cancel:hover:not(:disabled)::before,
+.auth-button:hover:not(:disabled)::before { background: var(--accent-2); }
+
+.btn-save:active:not(:disabled),
+.btn-cancel:active:not(:disabled),
+.auth-button:active:not(:disabled) { transform: translate(1px, 1px); }
+
+.btn-save:focus-visible,
+.btn-cancel:focus-visible,
+.auth-button:focus-visible {
+  outline: var(--line) solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+.btn-save:disabled,
+.btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

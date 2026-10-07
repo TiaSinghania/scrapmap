@@ -1,4 +1,3 @@
-/* Make sure your Leaflet maps actually render properly */
 .leaflet-container {
   width: 100%;
   height: 100%;
@@ -6,8 +5,9 @@
 
 .map-wrapper {
   position: relative;
+  width: 100%;
   height: 100vh;
-  width: 100vw;
+  height: 100dvh;
 }
 
 .map-container {
@@ -16,7 +16,64 @@
   z-index: 0;
 }
 
+/* ---------- Pins (colors come from the theme variables) ---------- */
+.pin-svg {
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(2px 2px 0 rgba(40, 25, 10, 0.3));
+}
+.pin-needle { stroke: var(--ink-muted); stroke-width: 2.5; }
+.pin-head   { fill: var(--accent); stroke: var(--ink); stroke-width: 2.5; }
+.pin-shine  { fill: #fff; opacity: 0.45; }
+.pin-svg--pending .pin-head { fill: var(--accent-2); }
+
+/* ---------- Hover tooltip ---------- */
 .leaflet-tooltip {
   max-width: 14rem;
   white-space: normal;
+  padding: 0.3rem 0.6rem;
+  background: var(--card);
+  color: var(--ink);
+  border: var(--line) solid var(--border-color);
+  border-radius: 0;
+  box-shadow: 3px 3px 0 rgba(40, 25, 10, 0.25);
+  font: 700 0.95rem/1.25 var(--font-heading);
+}
+.leaflet-tooltip-top::before {
+  border-top-color: var(--border-color);
+}
+
+/* ---------- Zoom buttons and attribution: sharp corners, thick border ---------- */
+.leaflet-bar,
+.leaflet-touch .leaflet-bar {
+  border: var(--line) solid var(--border-color);
+  border-radius: 0;
+  box-shadow: 3px 3px 0 rgba(40, 25, 10, 0.25);
+}
+.leaflet-bar a,
+.leaflet-touch .leaflet-bar a,
+.leaflet-touch .leaflet-bar a:first-child,
+.leaflet-touch .leaflet-bar a:last-child {
+  border-radius: 0;
+  background-color: var(--card);
+  color: var(--ink);
+  border-bottom: 2px solid var(--border-color);
+}
+.leaflet-bar a:last-child,
+.leaflet-touch .leaflet-bar a:last-child {
+  border-bottom: none;
+}
+.leaflet-bar a:hover,
+.leaflet-touch .leaflet-bar a:hover {
+  background-color: var(--accent-2);
+  color: var(--ink);
+}
+
+.leaflet-container .leaflet-control-attribution {
+  background: var(--card);
+  color: var(--ink-muted);
+  font-family: var(--font-body);
+}
+.leaflet-container .leaflet-control-attribution a {
+  color: var(--accent-dark);
 }

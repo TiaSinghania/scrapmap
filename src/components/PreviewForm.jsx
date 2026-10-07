@@ -9,6 +9,7 @@ export default function PreviewForm({ pin, onComplete, onCancel }) {
   const [date, setDate] = useState(pin?.date || '');
   const [imageFiles, setImageFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [location, setLocation] = useState(pin?.location || '');
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -31,6 +32,7 @@ export default function PreviewForm({ pin, onComplete, onCancel }) {
 
       await setDoc(pinRef, {
         title,
+        location: location.trim(),
         date,
         lat: pin.lat,
         lon: pin.lon,
@@ -56,6 +58,18 @@ export default function PreviewForm({ pin, onComplete, onCancel }) {
           onChange={e => setTitle(e.target.value)} 
           className="form-input"
           required 
+        />
+      </label>
+
+      <label className="form-label">
+        Location
+        <input
+          type="text"
+          value={location}
+          onChange={e => setLocation(e.target.value)}
+          className="form-input"
+          required
+          maxLength={80}
         />
       </label>
 
