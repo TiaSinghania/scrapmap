@@ -26,7 +26,7 @@ export default function AuthGate({ children }) {
   if (!user) {
     return (
       <div className="auth-screen">
-        <h1>scrapmap</h1>
+        <h1>ScrapMap</h1>
         <button onClick={handleSignIn} className="auth-button">Sign in with Google</button>
         {error && <p className="auth-error">{error}</p>}
       </div>

@@ -14,10 +14,15 @@
 }
 
 .auth-screen h1 {
-  font: 700 2.4rem/1.1 var(--font-heading);
+  font: 700 3.6rem/1.1 var(--font-hand);
+  font-style: italic;
 }
 
 .auth-error {
   color: var(--danger);
   font-weight: 700;
+}
+
+.auth-button {
+  font: 700 medium var(--font-body);
 }
