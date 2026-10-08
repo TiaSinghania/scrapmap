@@ -171,19 +171,35 @@ export default function Map( {user} ) {
       >
         <ZoomControl position="bottomright" />
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-          minZoom={17}
+          // attribution="Tiles &copy; Esri &mdash; Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community"
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          minZoom={16}
+          maxNativeZoom={18}
+          maxZoom={19}
         />
         <TileLayer
-          attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>...'
+          url="https://tiles.stadiamaps.com/tiles/stamen_terrain_labels/{z}/{x}/{y}{r}.png"
+          minZoom={16}
+          maxZoom={19}
+          className="detailed-text"
+        />
+        <TileLayer
+          // attribution='&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>...'
           url="https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg"
+          className="watercolor-tiles"
           maxZoom={16}
         />
         <TileLayer
-          url="https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}{r}.png"
+          url="https://tiles.stadiamaps.com/tiles/stamen_terrain_lines/{z}/{x}/{y}{r}.png"
           maxZoom={16}
+          className="watercolor-text"
         />
+        <TileLayer
+          url="https://tiles.stadiamaps.com/tiles/stamen_terrain_labels/{z}/{x}/{y}{r}.png"
+          maxZoom={16}
+          className="watercolor-text"
+        />
+        
 
         <ClickCatcher onMapClick={handleMapClick} />
 

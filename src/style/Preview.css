@@ -5,19 +5,19 @@
 }
 
 .preview-title {
-  font: 700 1.9rem/1.15 var(--font-heading);
+  font: 700 1.9rem/1.15 var(--font-hand);
   color: var(--ink);
 }
 
 .preview-location {
   margin-top: 0.35rem;
-  font: italic 1.05rem var(--font-heading);
+  font: italic 1.05rem var(--font-hand);
   color: var(--accent-dark);
 }
 
 .preview-date {
   margin-top: 0.3rem;
-  font-family: var(--font-hand);
+  font-family: var(--font-heading);
   font-size: 1rem;
   color: var(--ink-muted);
 }

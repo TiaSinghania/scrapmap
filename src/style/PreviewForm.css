@@ -1,24 +1,26 @@
 .preview-form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 2rem;
 }
 
 .form-label {
   display: flex;
   flex-direction: column;
-  font: 700 0.95rem var(--font-heading);
+  font: 600 0.95rem var(--font-heading);
   color: var(--ink);
+  font-size: large;
 }
 
 .form-input {
   margin-top: 0.3rem;
-  padding: 0.55rem 0.65rem;
+  padding: 0.35rem 0.65rem;
   background: var(--card);
-  color: var(--ink);
+  color: var(--ink-muted);
   border: var(--line) solid var(--border-color);
   border-radius: 0;
-  font: 400 1rem var(--font-body);
+  font: 600 1rem var(--font-hand);
+  font-size: medium;
   outline: none;
 }
 
@@ -34,7 +36,7 @@
 
 .form-file-input {
   margin-top: 0.3rem;
-  font: 400 0.9rem var(--font-body);
+  font: 400 0.9rem var(--font-heading);
   color: var(--ink);
 }
 
@@ -46,7 +48,8 @@
   color: var(--ink);
   border: var(--line) solid var(--border-color);
   border-radius: 0;
-  font: 700 0.9rem var(--font-heading);
+  font: 600 0.9rem var(--font-body);
+  font-size: medium;
   cursor: pointer;
   transition: background-color 0.15s;
 }
@@ -64,4 +67,6 @@
 .btn-cancel,
 .btn-save {
   flex: 1;
+  font: 600 0.9rem var(--font-body);
+  font-size: medium;
 }

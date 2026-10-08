@@ -1,27 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Josefin+Sans:wght@400;600&family=La+Belle+Aurore&family=Special+Elite&display=swap');
 /* ============================================================
    THEME. Everything else in the app reads from these variables,
    so changing a value here restyles the whole app.
    The values below are PLACEHOLDERS until you pick a palette and fonts.
    ============================================================ */
 :root {
-  /* palette (role: value) */
-  --paper: #f3e9d2;         /* page / sidebar background */
-  --card: #fbf6e9;          /* form fields, photo mats, button faces */
-  --ink: #3a2e28;           /* main text */
-  --ink-muted: #7a6a5c;     /* dates, captions, pin needle */
-  --accent: #b5532f;        /* primary buttons, pin head, hovers */
-  --accent-dark: #8f3f22;   /* primary button hover */
-  --accent-2: #d9a441;      /* highlights, focus rings, pending pin */
-  --border-color: #8a5a3b;  /* the thick colored borders */
-  --danger: #a3262a;        /* delete */
+
+--paper: #cdc1a8;
+--card: #dad1be;
+--ink: var(--border-color);
+--ink-muted: #525a57;
+--accent: #234d68;
+--accent-dark: #243f50;
+--accent-2: #588b7d;
+--border-color: #3a3d3c;
+--danger: #8a3b33;
+--pin-color: #8d2424;
+--pin-border: #3e1414;
 
   /* fonts: swap in your Google Fonts names here, keep the fallbacks */
-  --font-heading: Georgia, "Times New Roman", serif;
-  --font-body: "Trebuchet MS", system-ui, sans-serif;
-  --font-hand: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
+  --font-heading: "Special Elite", system-ui, sans-serif;
+  --font-body: "EB Garamond", system-ui, sans-serif;
+  --font-hand: "La Belle Aurore", "Segoe Print", "Comic Sans MS", cursive;
 
   /* thickness of the chunky borders */
   --line: 3px;
+
+  
 }
 
 *, *::before, *::after {

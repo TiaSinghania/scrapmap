@@ -2,6 +2,12 @@
   width: 100%;
   height: 100%;
 }
+.watercolor-tiles {
+  filter: sepia(0.5) hue-rotate(-10deg) brightness(0.65) contrast(1.2) saturate(0.9);
+}
+.watercolor-text {
+  filter: sepia(0.4) brightness(0.7) contrast(1.2) saturate(0.9);
+}
 
 .map-wrapper {
   position: relative;
@@ -23,24 +29,44 @@
   filter: drop-shadow(2px 2px 0 rgba(40, 25, 10, 0.3));
 }
 .pin-needle { stroke: var(--ink-muted); stroke-width: 2.5; }
-.pin-head   { fill: var(--accent); stroke: var(--ink); stroke-width: 2.5; }
+.pin-head   { fill: var(--pin-color); stroke: var(--pin-border); stroke-width: 2.5; }
 .pin-shine  { fill: #fff; opacity: 0.45; }
 .pin-svg--pending .pin-head { fill: var(--accent-2); }
 
 /* ---------- Hover tooltip ---------- */
+/* ---------- Hover tooltip ---------- */
 .leaflet-tooltip {
-  max-width: 14rem;
+  position: relative;
+  isolation: isolate;
+  min-width: 18ch;        
+  max-width: 20rem;   
+  text-align: center;    
   white-space: normal;
-  padding: 0.3rem 0.6rem;
-  background: var(--card);
+  padding: 0.8rem 1.2rem; 
+  background: transparent;
   color: var(--ink);
-  border: var(--line) solid var(--border-color);
+  border: none;
   border-radius: 0;
-  box-shadow: 3px 3px 0 rgba(40, 25, 10, 0.25);
-  font: 700 0.95rem/1.25 var(--font-heading);
+  box-shadow: none;
+  font: 700 0.95rem/1.25 var(--font-hand);
 }
-.leaflet-tooltip-top::before {
-  border-top-color: var(--border-color);
+
+/* Torn paper background layer */
+.leaflet-tooltip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--card);
+  background-image: url("../assets/paper-grain.png");
+  background-blend-mode: multiply;
+  border: var(--line) solid var(--border-color);
+  filter: url(#torn-edge) drop-shadow(3px 3px 0 rgba(40, 25, 10, 0.25));
+}
+
+/* Hide default Leaflet arrow tips */
+.leaflet-tooltip::before {
+  display: none;
 }
 
 /* ---------- Zoom buttons and attribution: sharp corners, thick border ---------- */
